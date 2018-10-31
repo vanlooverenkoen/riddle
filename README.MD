@@ -4,7 +4,7 @@
 
 **What does it do?**
 
-Riddle is a library you can import in your project to send your logs to the Riddle app. The Riddle app will be available soon. An overaly will be shown in Android where you can view all the logs by your app. You can also filter on certain parameters.
+Riddle is a library you can import in your project to send your logs to the Riddle app. The Riddle app will be available soon. An overlay will be shown in Android where you can view all the logs by your app. You can also filter on certain parameters.
 
 **How To Use**
 
