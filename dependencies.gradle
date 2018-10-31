@@ -1,0 +1,40 @@
+def versions = [
+        buildtools              : '3.3.0-alpha12',
+        kotlin                  : '1.2.61',
+        versionsPlugin          : '0.17.0',
+        detekt                  : '1.0.0.RC6-4',
+        dokka                   : '0.9.17',
+]
+
+ext.versions = versions
+
+def gradlePlugins = [
+        buildTools: "com.android.tools.build:gradle:${versions.buildtools}",
+        kotlin    : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+        versions  : "com.github.ben-manes:gradle-versions-plugin:${versions.versionsPlugin}",
+        dokka     : "org.jetbrains.dokka:dokka-gradle-plugin:${versions.dokka}",
+]
+
+def testing = [
+]
+
+def annotationProcessors = [
+]
+
+def implementation = [
+]
+
+def debugImplementation = [
+]
+
+def releaseImplementation = [
+]
+
+ext.deps = [
+        "implementation"       : implementation,
+        "debugImplementation"  : debugImplementation,
+        "releaseImplementation": releaseImplementation,
+        "gradlePlugins"        : gradlePlugins,
+        "testing"              : testing,
+        "annotationProcessors" : annotationProcessors
+]
