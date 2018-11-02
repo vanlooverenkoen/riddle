@@ -23,3 +23,27 @@ Apply the plugin by adding next command at the top of your app/build.gradle file
     dependencies {
         implementation "be.vanlooverenkoen:riddle:0.0.3"
     }
+
+***Setup***
+in your application file add the following.
+
+        if (BuildConfig.DEBUG) {
+            Riddle.setLogType(RiddleLogType.VERBOSE,
+                    RiddleLogType.INFO,
+                    RiddleLogType.DEBUG,
+                    RiddleLogType.ERROR,
+                    RiddleLogType.ASSERT,
+                    RiddleLogType.WARN)
+                    .setLogListener { Riddle.sendLog(this, it) }
+                    .startNewSession()
+        }
+        
+ ***Usage***
+ Just call the methods on Riddle:
+ 
+        Riddle.d("Tag", "Debug Content")       
+        Riddle.i("Tag", "Info Content")       
+        Riddle.v("Tag", "Verbose Content")       
+        Riddle.w("Tag", "Warn Content")       
+        Riddle.a("Tag", "Assert Content")     
+        Riddle.e("Tag", "Error Content")
