@@ -21,5 +21,5 @@ Import in root gradle
 Apply the plugin by adding next command at the top of your app/build.gradle file
 
     dependencies {
-        implementation "be.vanlooverenkoen:riddle:0.0.2"
+        implementation "be.vanlooverenkoen:riddle:0.0.3"
     }

@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 /**
  * @author Koen Van Looveren
  */
-object AppHelper {
+internal object AppHelper {
     fun isPackageInstalled(packagename: String, packageManager: PackageManager): Boolean {
         return try {
             packageManager.getPackageInfo(packagename, 0)
