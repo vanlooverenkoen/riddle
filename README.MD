@@ -21,25 +21,28 @@ Import in root gradle
 Apply the plugin by adding next command at the top of your app/build.gradle file
 
     dependencies {
-        implementation "be.vanlooverenkoen:riddle:0.0.3"
+        implementation "be.vanlooverenkoen:riddle:0.0.4"
     }
 
 ***Setup***
-in your application file add the following.
+in your application file add the following. By default are all logTypes enabled. (Debug, Info, Verbose, Warn, Error, Assert). Mak sure you only enable Riddle for debug builds.
 
         if (BuildConfig.DEBUG) {
-            Riddle.setLogType(RiddleLogType.VERBOSE,
-                    RiddleLogType.INFO,
-                    RiddleLogType.DEBUG,
-                    RiddleLogType.ERROR,
-                    RiddleLogType.ASSERT,
-                    RiddleLogType.WARN)
-                    .setLogListener { Riddle.sendLog(this, it) }
-                    .startNewSession()
+            Riddle.with(this)
         }
-        
- ***Usage***
- Just call the methods on Riddle:
+
+***Configuration***
+If you want to enable or disable certain log types you need to pass only the logtypes you want to enable. The configuration below will enable logging for Debug, Error and Verbose. (Info, Warn and Assert will be disabled)
+
+        if (BuildConfig.DEBUG) {
+            Riddle.with(this)
+                  .setLogTypes(RiddleLogType.DEBUG,
+                               RiddleLogType.ERROR,
+                               RiddleLogType.VERBOSE)
+        }
+
+***Usage***
+Just call the methods on Riddle:
  
         Riddle.d("Tag", "Debug Content")       
         Riddle.i("Tag", "Info Content")       

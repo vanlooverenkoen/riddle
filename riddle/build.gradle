@@ -1,6 +1,4 @@
-plugins {
-    id "com.jfrog.bintray" version "1.8.4"
-}
+plugins { id "com.jfrog.bintray" version "1.8.4" }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -8,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
-def artifactVersion = '0.0.3'
+def artifactVersion = '0.0.4'
 def artifactGroup = 'be.vanlooverenkoen'
 def artifactName = 'riddle'
 
@@ -23,7 +21,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -32,7 +29,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -40,7 +36,31 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+
+    deps.implementation.each { name, dep ->
+        implementation dep
+    }
+
+    deps.debugImplementation.each { name, dep ->
+        debugImplementation dep
+    }
+
+    deps.betaImplementation.each { name, dep ->
+        betaImplementation dep
+    }
+
+    deps.releaseImplementation.each { name, dep ->
+        releaseImplementation dep
+    }
+
+    deps.annotationProcessors.each { name, dep ->
+        kapt dep
+    }
+
+    deps.testing.each { name, dep ->
+        testImplementation dep
+        androidTestImplementation dep
+    }
 }
 
 task sourceJar(type: Jar) {

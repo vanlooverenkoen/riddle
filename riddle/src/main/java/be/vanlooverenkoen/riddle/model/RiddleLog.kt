@@ -60,29 +60,30 @@ class RiddleLog private constructor(private val type: RiddleLogType,
     //endregion
 
     companion object {
+        private const val EMPTY_TAG = "No Tag Given"
 
         internal fun d(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.DEBUG, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.DEBUG, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         internal fun e(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.ERROR, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.ERROR, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         internal fun i(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.INFO, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.INFO, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         internal fun w(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.WARN, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.WARN, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         internal fun a(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.ASSERT, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.ASSERT, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         internal fun v(tag: String?, content: String): RiddleLog {
-            return RiddleLog(RiddleLogType.VERBOSE, tag ?: "", content, Calendar.getInstance().timeInMillis, "")
+            return RiddleLog(RiddleLogType.VERBOSE, tag ?: EMPTY_TAG, content, Calendar.getInstance().timeInMillis, "")
         }
 
         @JvmField

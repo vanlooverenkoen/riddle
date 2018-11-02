@@ -1,9 +1,13 @@
 def versions = [
-        buildtools              : '3.3.0-alpha12',
-        kotlin                  : '1.2.61',
-        versionsPlugin          : '0.17.0',
-        detekt                  : '1.0.0.RC6-4',
-        dokka                   : '0.9.17',
+        //Plugins
+        buildtools    : '3.3.0-alpha12',
+        kotlin        : '1.2.61',
+        versionsPlugin: '0.17.0',
+        detekt        : '1.0.0.RC6-4',
+        dokka         : '0.9.17',
+
+        //Testing
+        jUnit         : '4.12',
 ]
 
 ext.versions = versions
@@ -16,12 +20,14 @@ def gradlePlugins = [
 ]
 
 def testing = [
+        jUnit: "junit:junit:${versions.jUnit}"
 ]
 
 def annotationProcessors = [
 ]
 
 def implementation = [
+        kotlinStdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
 ]
 
 def debugImplementation = [
