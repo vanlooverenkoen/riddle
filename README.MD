@@ -25,6 +25,7 @@ Apply the plugin by adding next command at the top of your app/build.gradle file
     }
 
 ***Setup***
+
 in your application file add the following. By default are all logTypes enabled. (Debug, Info, Verbose, Warn, Error, Assert). Mak sure you only enable Riddle for debug builds.
 
         if (BuildConfig.DEBUG) {
@@ -32,6 +33,7 @@ in your application file add the following. By default are all logTypes enabled.
         }
 
 ***Configuration***
+
 If you want to enable or disable certain log types you need to pass only the logtypes you want to enable. The configuration below will enable logging for Debug, Error and Verbose. (Info, Warn and Assert will be disabled)
 
         if (BuildConfig.DEBUG) {
@@ -42,6 +44,7 @@ If you want to enable or disable certain log types you need to pass only the log
         }
 
 ***Usage***
+
 Just call the methods on Riddle:
  
         Riddle.d("Tag", "Debug Content")       
