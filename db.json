@@ -1,0 +1,20 @@
+{
+  "logs": [
+    {
+      "id": 1,
+      "content": "Started new session"
+    },
+    {
+      "id": 2,
+      "content": "App started"
+    },
+    {
+      "id": 3,
+      "content": "App destroyed"
+    }
+  ],
+  "library": {
+    "Riddle": "0.0.5",
+    "Riddle Network Interceptor": "Coming soon",
+  }
+}
