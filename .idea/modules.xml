@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/riddle/riddle.iml" filepath="$PROJECT_DIR$/riddle/riddle.iml" />
       <module fileurl="file://$PROJECT_DIR$/riddle-lib.iml" filepath="$PROJECT_DIR$/riddle-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/riddlenetworkinterceptor/riddlenetworkinterceptor.iml" filepath="$PROJECT_DIR$/riddlenetworkinterceptor/riddlenetworkinterceptor.iml" />
     </modules>
   </component>
 </project>

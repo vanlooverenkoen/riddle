@@ -1,1 +1,1 @@
-include ':riddle'
+include ':riddle', ':riddlenetworkinterceptor'
