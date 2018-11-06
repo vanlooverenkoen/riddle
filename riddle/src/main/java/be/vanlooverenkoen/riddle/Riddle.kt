@@ -63,25 +63,24 @@ class Riddle private constructor(private val context: Context) {
     private fun startNewSession() {
         if (!AppHelper.isPackageInstalled(PACKAGE, context.packageManager)) return
         val intent = Intent().apply {
-            action = Riddle.ACTION_NEW_SESSION
-            putExtra(ARG_NEW_SESSION, context.packageName)
-            setPackage(PACKAGE)
+            action = ACTION_NEW_SESSION
+            putExtra(ARG_DATA, context.packageName)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent)
-        } else {
-            context.startService(intent)
-        }
+        startService(intent)
     }
 
     private fun sendLog(log: RiddleLog) {
         if (!AppHelper.isPackageInstalled(PACKAGE, context.packageManager)) return
         log.packageName = context.packageName
         val intent = Intent().apply {
-            action = Riddle.ACTION_LOG_DATA
-            putExtra(Riddle.ARG_LOG, log)
-            setPackage(PACKAGE)
+            action = ACTION_LOG_DATA
+            putExtra(ARG_DATA, log)
         }
+        startService(intent)
+    }
+
+    private fun startService(intent: Intent) {
+        intent.setPackage(PACKAGE)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent)
         } else {
@@ -92,16 +91,14 @@ class Riddle private constructor(private val context: Context) {
     companion object {
         @SuppressLint("StaticFieldLeak") // When using the application context there is no risk for saving a Riddle instance. (Activity context will cause memory leaks)
         private var instance: Riddle? = null
-
-        const val ARG_LOG = "RIDDLE_ARG_LOG"
-        const val ARG_NEW_SESSION = "RIDDLE_ARG_NEW_SESSION"
+        private const val ARG_DATA = "data"
 
         private const val ACTION_LOG_DATA = "be.vanlooverenkoen.riddle.app.LOG_DATA"
         private const val ACTION_NEW_SESSION = "be.vanlooverenkoen.riddle.app.LOG_NEW_SESSION"
         private const val PACKAGE = "be.vanlooverenkoen.riddle.app"
 
         //region Log Functions
-        fun d(tag: String?, content: String) {
+        fun d(tag: String? = null, content: String) {
             instance?.d(tag, content)
         }
 
