@@ -1,8 +1,10 @@
 ### Riddle ### 
 Riddle Logger:
+
 [ ![Download](https://api.bintray.com/packages/vanlooverenkoen/maven/riddle/images/download.svg) ](https://bintray.com/vanlooverenkoen/maven/riddle/_latestVersion)
 
 Riddle Network Interceptor:
+
 [ ![Download](https://api.bintray.com/packages/vanlooverenkoen/maven/riddle-network-interceptor/images/download.svg) ](https://bintray.com/vanlooverenkoen/maven/riddle-network-interceptor/_latestVersion)
 
 **What does it do?**
