@@ -3,38 +3,52 @@ package be.vanlooverenkoen.riddle.network.interceptor
 import android.app.Application
 import android.content.Intent
 import android.os.Build
+import be.vanlooverenkoen.riddle.network.interceptor.model.Headers
 import be.vanlooverenkoen.riddle.network.interceptor.model.NetworkRequest
 import be.vanlooverenkoen.riddle.network.interceptor.model.NetworkResponse
 import be.vanlooverenkoen.riddle.network.interceptor.util.AppHelper
 import okhttp3.Interceptor
+import okhttp3.RequestBody
 import okhttp3.Response
+import okio.Buffer
+import java.io.IOException
 import java.util.UUID
 
 /**
  * @author Koen Van Looveren
  */
-class RiddleNetworkInterceptor(application: Application) : Interceptor {
+class RiddleNetworkInterceptor(application: Application, private val baseUrl: String? = null) : Interceptor {
     private val context = application.applicationContext
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val callId = UUID.randomUUID().toString()
         val request = chain.request()
+        val url = if (baseUrl == null) request.url().toString() else request.url().toString().replaceFirst(baseUrl, "")
+        val method = request.method().toString().toUpperCase()
+        val packageName = context.packageName
         val networkRequest = NetworkRequest(callId,
-                request.url().toString(),
-                request.body()?.toString() ?: "")
+                method,
+                baseUrl,
+                url,
+                bodyToString(request.body()),
+                packageName,
+                Headers(request.headers().toMultimap()))
         sendRequest(networkRequest)
         val response = chain.proceed(request)
         val networkResponse = NetworkResponse(callId,
-                response.request().url().toString(),
+                method,
+                baseUrl,
+                url,
                 response.code(),
-                response.body()?.toString() ?: "")
+                response.body()?.string() ?: "",
+                packageName,
+                Headers(request.headers().toMultimap()))
         sendResponse(networkResponse)
         return response
     }
 
     private fun sendRequest(request: NetworkRequest) {
         if (!AppHelper.isPackageInstalled(PACKAGE, context.packageManager)) return
-        request.packageName = context.packageName
         val intent = Intent().apply {
             action = ACTION_LOG_NETWORK
             putExtra(ARG_DATA, request)
@@ -44,7 +58,6 @@ class RiddleNetworkInterceptor(application: Application) : Interceptor {
 
     private fun sendResponse(response: NetworkResponse) {
         if (!AppHelper.isPackageInstalled(PACKAGE, context.packageManager)) return
-        response.packageName = context.packageName
         val intent = Intent().apply {
             action = ACTION_LOG_NETWORK
             putExtra(ARG_DATA, response)
@@ -59,6 +72,18 @@ class RiddleNetworkInterceptor(application: Application) : Interceptor {
         } else {
             context.startService(intent)
         }
+    }
+
+    private fun bodyToString(body: RequestBody?): String {
+        body ?: return ""
+        return try {
+            val buffer = Buffer()
+            body.writeTo(buffer)
+            buffer.readUtf8()
+        } catch (e: IOException) {
+            "could not parse requestbody"
+        }
+
     }
 
     companion object {
