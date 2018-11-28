@@ -90,7 +90,7 @@ bintray {
     key = System.getenv('BINTRAY_KEY')
     pkg {
         repo = 'maven'
-        name = 'riddle'
+        name = 'riddle-network-interceptor'
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/vanlooverenkoen/Riddle'
 
@@ -134,7 +134,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'Riddle is a logging library to send your logs to another app')
-                root.appendNode('name', 'riddle')
+                root.appendNode('name', 'riddle-network-interceptor')
                 root.appendNode('url', 'https://github.com/vanlooverenkoen/Riddle')
                 root.children().last() + pomConfig
 
