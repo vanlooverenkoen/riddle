@@ -1,6 +1,6 @@
 package be.vanlooverenkoen.riddle.network.interceptor
 
-import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import be.vanlooverenkoen.riddle.network.interceptor.model.Headers
@@ -17,8 +17,7 @@ import java.util.UUID
 /**
  * @author Koen Van Looveren
  */
-class RiddleNetworkInterceptor(application: Application, private val baseUrl: String? = null) : Interceptor {
-    private val context = application.applicationContext
+class RiddleNetworkInterceptor(private val context: Context, private val baseUrl: String? = null) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val callId = UUID.randomUUID().toString()

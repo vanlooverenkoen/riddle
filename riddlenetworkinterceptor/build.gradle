@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
-def artifactVersion = '0.0.1'
+def artifactVersion = '0.0.2'
 def artifactGroup = 'be.vanlooverenkoen'
 def artifactName = 'riddle-network-interceptor'
 
