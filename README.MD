@@ -27,7 +27,7 @@ Apply the plugin by adding next command at the top of your app/build.gradle file
 
     dependencies {
         implementation "be.vanlooverenkoen:riddle:0.0.5"
-        implementation "be.vanlooverenkoen:riddle-network-interceptor:0.0.1"
+        implementation "be.vanlooverenkoen:riddle-network-interceptor:0.0.2"
     }
 
 ***Setup Logger***
