@@ -10,6 +10,7 @@ import be.vanlooverenkoen.riddle.network.interceptor.util.AppHelper
 import okhttp3.Interceptor
 import okhttp3.RequestBody
 import okhttp3.Response
+import okhttp3.ResponseBody
 import okio.Buffer
 import java.io.IOException
 import java.util.UUID
@@ -21,29 +22,35 @@ class RiddleNetworkInterceptor(private val context: Context, private val baseUrl
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val callId = UUID.randomUUID().toString()
-        val request = chain.request()
-        val url = if (baseUrl == null) request.url().toString() else request.url().toString().replaceFirst(baseUrl, "")
-        val method = request.method().toString().toUpperCase()
+
+        //Request
+        val originalRequest = chain.request()
+        val newRequest = originalRequest.newBuilder().build()
+        val url = if (baseUrl == null) originalRequest.url().toString() else originalRequest.url().toString().replaceFirst(baseUrl, "")
+        val method = originalRequest.method().toString().toUpperCase()
         val packageName = context.packageName
         val networkRequest = NetworkRequest(callId,
                 method,
                 baseUrl,
                 url,
-                bodyToString(request.body()),
+                bodyToString(originalRequest.body()),
                 packageName,
-                Headers(request.headers().toMultimap()))
+                Headers(originalRequest.headers().toMultimap()))
         sendRequest(networkRequest)
-        val response = chain.proceed(request)
+
+        //Response
+        val response = chain.proceed(newRequest)
+        val newResponse = response.newBuilder().build()
         val networkResponse = NetworkResponse(callId,
                 method,
                 baseUrl,
                 url,
                 response.code(),
-                response.body()?.string() ?: "",
+                bodyToString(response.body()),
                 packageName,
-                Headers(request.headers().toMultimap()))
+                Headers(response.headers().toMultimap()))
         sendResponse(networkResponse)
-        return response
+        return newResponse
     }
 
     private fun sendRequest(request: NetworkRequest) {
@@ -82,7 +89,17 @@ class RiddleNetworkInterceptor(private val context: Context, private val baseUrl
         } catch (e: IOException) {
             "could not parse requestbody"
         }
+    }
 
+    private fun bodyToString(body: ResponseBody?): String {
+        body ?: return ""
+        return try {
+            val source = body.source()
+            source.request(Long.MAX_VALUE)
+            String(source.buffer().clone().readByteArray())
+        } catch (e: IOException) {
+            "could not parse requestbody"
+        }
     }
 
     companion object {
